@@ -14,7 +14,7 @@
         </div>
         <div class="card-footer">
             <small class="text-muted">
-                <button @onclick="(e => SelectProduct(product.Id))" data-toggle="modal" data-target="#productModal" class="btn btn-primary">More Info</button>
+                <button @onclick="(e => SelectProduct(product.Id))" @onmouseover="(e => start(product.Id))" data-toggle="modal" data-target="#productModal" class="btn btn-primary">More Info</button>
             </small>
         </div>
     }
@@ -80,6 +80,16 @@
         GetCurrentRating();
     }
 
+    bool unlock;
+    void start(string productId)
+    {
+        if (!unlock)
+        {
+            selectProductId = productId;
+            selectedProduct = ProductService.GetProducts().First(x => x.Id == productId);
+            unlock = true;
+        }
+    }
 
     int currentRating = 0;
     int voteCount = 0;
